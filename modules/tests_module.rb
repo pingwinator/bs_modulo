@@ -18,8 +18,9 @@ class TestsModule < BaseModule
     else
       parameters.unshift %Q[-project "#{config.build.project.name}.xcodeproj"]
     end
-    
-    result = system %Q[xctool #{parameters.join(' ')}]
+    cmd = %Q[xctool #{parameters.join(' ')}]
+    info cmd
+    result = system cmd 
     unless result
       fail "Unit tests failed"
     end
