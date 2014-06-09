@@ -10,8 +10,8 @@ class TestsModule < BaseModule
     parameters = [
       "-scheme #{config.tests.scheme}",
       '-sdk iphonesimulator',
-      "-reporter junit:test-reports/junit-report.xml",
-      "clean build test -test-sdk iphonesimulator7.1",
+      "clean build test",
+      "-reporter junit:test-reports/junit-report.xml"
     ]
     if config.using_pods?
       parameters.unshift %Q[-workspace "#{config.build.workspace.name}.xcworkspace"]
