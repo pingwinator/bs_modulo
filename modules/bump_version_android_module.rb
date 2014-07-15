@@ -5,7 +5,12 @@ class BumpVersionAndroidModule < BaseModule
   check_enabled!
   
   def self.run config
-    manifest_xml_file = config.runtime.project_dir + 'src/main/AndroidManifest.xml'
+
+    if config.build_android.gradle 
+      manifest_xml_file = config.runtime.project_dir + 'src/main/AndroidManifest.xml'
+    else
+      manifest_xml_file = config.runtime.project_dir + 'AndroidManifest.xml'
+    end
     info "Bumping Android version..."
     info "#{manifest_xml_file}"
     begin
