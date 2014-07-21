@@ -6,6 +6,29 @@ class CleanAndroidModule < BaseModule
     info "Cleaning..."
     gradle = config.build_android.gradle
     if gradle 
+      properties_file = real_file sysconf.android.properties_file
+      keystores_path = real_dir sysconf.android.keystore_dir
+      if properties_file
+        properties = YAML.load_file(properties_file) if File.exists? properties_file
+        props = properties[config.build_android.properties_key] if properties
+        props['key.store'] = keystores_path + props['key.store'] if defined?(props['key.store'])
+      end
+      
+      if props
+        if gradle 
+          info 'Updating gradle.properties file...'
+          project_props_file = config.runtime.project_dir + 'gradle.properties'
+        end
+        project_props = nil
+        if File.exists? project_props_file
+          project_props = Properties.load_from_file project_props_file
+        else
+          project_props = Properties.new []
+        end
+        project_props.gradle
+        project_props.set props
+        project_props.save_to_file project_props_file
+      end
       system %Q[sh #{config.runtime.gradlew_path}/gradlew clean -Poutput_file=#{config.runtime.apk_file}] or fail "clean project"
     else  
     # clean deps
