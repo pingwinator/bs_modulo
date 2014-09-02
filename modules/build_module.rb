@@ -22,7 +22,9 @@ class BuildModule < BaseModule
     self.add_version_number_to_icon config, project_name
     
     ## building
-    command = %Q[xctool #{self.build_params config}]
+    #command = %Q[xctool #{self.build_params config}]
+    command = %Q[set -o pipefail && xcodebuild #{parameters.join(' ')} | xcpretty --no-utf]
+    
     info command
     result = system command
     ## done building
