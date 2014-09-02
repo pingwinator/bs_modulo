@@ -23,7 +23,7 @@ class BuildModule < BaseModule
     
     ## building
     #command = %Q[xctool #{self.build_params config}]
-    command = %Q[set -o pipefail && xcodebuild #{parameters.join(' ')} | xcpretty --no-utf]
+    command = %Q[set -o pipefail && xcodebuild #{self.build_params config} | xcpretty --no-utf]
     
     info command
     result = system command
