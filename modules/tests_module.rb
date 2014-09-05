@@ -18,10 +18,12 @@ class TestsModule < BaseModule
     else
       parameters.unshift %Q[-project "#{config.build.project.name}.xcodeproj"]
     end
-    cmd = %Q[set -o pipefail && xcodebuild #{parameters.join(' ')} | xcpretty --no-utf -r junit -o test-reports/junit-report.xml]
+    cmd = %Q[set -o pipefail && xcodebuild #{parameters.join(' ')} | tee "$TMPDIR/buildLog.txt" | xcpretty --no-utf -r junit -o test-reports/junit-report.xml]
     info cmd
     result = system cmd 
     unless result
+      info "full build log"
+      system %Q[cat "$TMPDIR/buildLog.txt"]
       fail "Unit tests failed"
     end
   end

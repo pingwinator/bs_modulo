@@ -23,7 +23,7 @@ class BuildModule < BaseModule
     
     ## building
     #command = %Q[xctool #{self.build_params config}]
-    command = %Q[set -o pipefail && xcodebuild #{self.build_params config} | xcpretty --no-utf]
+    command = %Q[set -o pipefail && xcodebuild #{self.build_params config} | tee "$TMPDIR/buildLog.txt" | xcpretty --no-utf]
     
     info command
     result = system command
@@ -32,6 +32,8 @@ class BuildModule < BaseModule
     self.remove_provision_profile
     hook! :build_complete
     unless result
+       info "full build log"
+       system %Q[cat "$TMPDIR/buildLog.txt"]
        fail "Build failed"
     end
   end
