@@ -10,13 +10,18 @@ class TestsModule < BaseModule
     parameters = [
       "-scheme #{config.tests.scheme}",
       '-sdk iphonesimulator',
-      "clean build test",
-      '-destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"'
+      "clean build test"
     ]
     if config.using_pods?
       parameters.unshift %Q[-workspace "#{config.build.workspace.name}.xcworkspace"]
     else
       parameters.unshift %Q[-project "#{config.build.project.name}.xcodeproj"]
+    end
+
+    if config.tests.destination
+      parameters.unshift %Q[-destination "#{config.tests.destination}"]
+    else
+      parameters.unshift %Q[-destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"]
     end
     cmd = %Q[set -o pipefail && xcodebuild #{parameters.join(' ')} | tee "$TMPDIR/buildLog.txt" | xcpretty --no-utf -r junit -o test-reports/junit-report.xml]
     info cmd
