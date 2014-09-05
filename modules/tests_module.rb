@@ -24,7 +24,7 @@ class TestsModule < BaseModule
       parameters.unshift %Q[-destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"]
     end
     cmd = %Q[set -o pipefail && xcodebuild #{parameters.join(' ')} | tee "$TMPDIR/buildLog.txt" | xcpretty --no-utf -r junit -o test-reports/junit-report.xml]
-    info cmd
+    #info cmd
     result = system cmd 
     unless result
       info "full build log"
