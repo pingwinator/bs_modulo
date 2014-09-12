@@ -21,6 +21,7 @@ GEM
     xcodeproj (0.9.0)
       activesupport (~> 3.2.13)
       colored (~> 1.2)
+    xcpretty (0.1.6)
 
 PLATFORMS
   ruby
@@ -34,3 +35,4 @@ DEPENDENCIES
   rest-client (~> 1.6.7)
   rmagick (~> 2.13.2)
   xcodeproj (~> 0.9.0)
+  xcpretty
