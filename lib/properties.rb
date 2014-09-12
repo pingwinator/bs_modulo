@@ -3,6 +3,7 @@ class Properties
   
   def initialize lines = []
     @props = {}
+    @gradle_format = false
     lines.each do |line|
       line.strip!
       # comment
@@ -17,6 +18,10 @@ class Properties
   def get key
     @props[key]
   end
+
+  def gradle
+    @gradle_format = true
+  end  
   
   def set key, value = ''
     if key.is_a? Hash
@@ -24,7 +29,13 @@ class Properties
         set k, v
       end
     else
-      @props[key] = value
+      if @gradle_format
+        new_key = key.dup
+        new_key.gsub! '.', '_'
+        @props[new_key] = value
+      else 
+        @props[key] = value
+      end
     end
   end
   
