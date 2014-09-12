@@ -26,7 +26,7 @@ class PackIpaModule < BaseModule
       identity     = config.profile.identity
       profile_file = real_file config.profile.file
       FileUtils.cd(config.runtime.build_dir) do
-        system %Q[xcrun -sdk "#{sdk}" PackageApplication -v "#{app_file}" -o "#{ipa_output_path}" --sign "#{identity}" --embed "#{profile_file}"] or fail "xcrun packaging and signing ipa"
+        system %Q[xcrun -sdk "#{sdk}" PackageApplication  "#{app_file}" -o "#{ipa_output_path}" --sign "#{identity}" --embed "#{profile_file}"] or fail "xcrun packaging and signing ipa"
       end
     else
       # pack ipa manually
