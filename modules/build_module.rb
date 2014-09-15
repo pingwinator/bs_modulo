@@ -1,7 +1,5 @@
 require "xcodeproj"
 require 'plist'
-require "rmagick"
-include Magick
 
 class BuildModule < BaseModule
   config_key 'build'
@@ -19,7 +17,7 @@ class BuildModule < BaseModule
     
     self.copy_provision_profile config
     self.unlock_keychain config
-    self.add_version_number_to_icon config, project_name
+
     
     ## building
     #command = %Q[xctool #{self.build_params config}]
@@ -114,56 +112,4 @@ class BuildModule < BaseModule
     rm_f build_profile if File.exists? build_profile
   end
   
-  def self.add_version_number_to_icon config, project_name
-    return unless config.runtime.version and config.build.ver_on_icon?
-    
-    ## get icons
-    target_name = if config.build.using_pods?
-      config.build.workspace.scheme
-    else
-      config.build.project.target
-    end
-    project = Xcodeproj::Project.open project_name
-    target = project.targets.select{|t| t.name == target_name}.first
-    project_info_file = real_path(target.build_settings(config.build.configuration)['INFOPLIST_FILE'])
-    
-    begin
-      project_info = Plist::parse_xml project_info_file
-      icons_names = project_info['CFBundleIcons']['CFBundlePrimaryIcon']['CFBundleIconFiles']
-    rescue Exception => e
-      icons_names = []
-    end
-    return if icons_names.empty?
-    
-    icons_patterns = icons_names.map do |icon|
-      "**/#{icon}"
-    end
-    info icons_patterns
-    Dir.glob(icons_patterns).each do |icon|
-      filename = real_path icon
-      retina = !!filename.index('@')
-      begin
-        image = Image::read(filename).first
-        draw = Draw::new
-        draw.annotate(image, 0, 0, 0, 0, config.runtime.version) {
-          self.font_family = 'Arial'
-          self.fill = 'blue'
-          self.stroke = 'black'
-          self.pointsize = if retina then 22 else 11 end
-          self.font_weight = BoldWeight
-          self.gravity = SouthGravity
-          self.text_antialias = true
-        }
-        info "Saving icon with version to #{filename}..."
-        image.write filename
-      rescue Exception => e
-        info "Something went wrong: #{e.message}"
-        next
-      end
-    end
-    
-    hook :build_complete, proc {
-      `git reset --hard`
-    }
-  end
 end
