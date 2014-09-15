@@ -71,8 +71,10 @@ Global Configuration Parameters:
 		tests:
 			enabled:    false
 			target:     TestProjectTest
+			destination: "platform=iOS Simulator,name=iPhone Retina (4-inch)"
 	`tests.enabled` **[bool]** - run tests or not  
-	`tests.target` **[string]** - tests target name
+	`tests.target` **[string]** - tests target name  
+	`tests.destination` **[string]** - destanation for test run. Default value "platform=iOS Simulator,name=iPhone Retina (4-inch)" if param not exist.
 
 6. **Pack IPA Module**  
 	_Packing build into IPA file and sign with specified profile if needed_  
