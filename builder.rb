@@ -11,7 +11,7 @@ require "settings"
 require 'commander/import'
 
 program :name, 'builder'
-program :version, '1.0.0'
+program :version, '1.0.1'
 program :description, 'Build System'
 
 command :install do |c|
@@ -42,5 +42,30 @@ command :build do |c|
   c.description = 'Run build'
   c.action do |args, options|
     Runner::run args
+  end
+end
+
+command :branch do |c|
+  c.syntax = '[WORKSPACE=/path/to/project] [BRANCH=branch_name] builder build'
+  c.description = 'Switch to BRANCH and fetch all data' 
+  c.action do |args, options|
+    ## check input parameters
+    if ENV['BRANCH']
+      branch = ENV['BRANCH']
+    else
+      branch = 'master'
+    end
+
+    if ENV['WORKSPACE']
+      workspace = real_dir ENV['WORKSPACE']
+    else
+      workspace = real_dir Dir::pwd
+    end
+
+    
+    command = %Q[!git fetch origin && git reset --hard origin/#{branch} && git clean -f -d]
+    
+    info command
+    #result = system command
   end
 end
