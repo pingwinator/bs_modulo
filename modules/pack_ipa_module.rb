@@ -8,7 +8,7 @@ class PackIpaModule < BaseModule
     app_name = File.basename app_file, '.app'
     
     output_file_name = config.pack_ipa.naming.prefix ?  config.pack_ipa.naming.prefix + '_' : ''
-    output_file_name += "#{app_name}_#{config.branch.name}_#{config.build.configuration}"
+    output_file_name += "#{app_name}_#{config.build.branch}_#{config.build.configuration}"
     config.runtime.output_file_mask = "#{output_file_name}*"
     if config.pack_ipa.naming.append_version?
       version = `agvtool mvers -terse1`.strip

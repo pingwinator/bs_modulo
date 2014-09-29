@@ -47,7 +47,7 @@ class HockeyappModule < BaseModule
           else
             ''
           end
-          apk_nice_name = build_dir + config.project_name + version + '.apk'
+          apk_nice_name = build_dir + config.project_name +'_' + config.build.branch' + '_' + 'config.build.configuration + '_' + version + '.apk'
           cp config.runtime.apk_file, apk_nice_name
           apk_file = apk_nice_name
         end

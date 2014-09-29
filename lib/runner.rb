@@ -89,6 +89,14 @@ module Runner
       workspace = real_dir Dir::pwd
     end
 
+    if ENV['BRANCH']
+      branch = ENV['BRANCH']
+    else
+      branch = 'master'
+    end
+
+    system %Q[git checkout #{branch}]
+
     config_file_name = unless args.empty? then File.basename args[0] else 'builder.yml' end
     config_file_path = workspace + config_file_name
     modules_dir      = BUILDER_DIR + 'modules/'
@@ -102,6 +110,7 @@ module Runner
       'workspace'     => workspace,
       'project_dir'   => project_dir,
       'configuration' => configuration
+      'branch'        => branch
     }
 
     platform_runtime = {}

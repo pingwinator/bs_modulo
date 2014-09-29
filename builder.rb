@@ -41,10 +41,6 @@ command :build do |c|
   c.syntax = '[WORKSPACE=/path/to/project] [CONFIGURATION=configuration_name] builder build [build_config_file]'
   c.description = 'Run build'
   c.action do |args, options|
-    if ENV['BRANCH']
-      branch = ENV['BRANCH']
-      system %Q[git checkout #{branch}]
-    end
     Runner::run args
   end
 end
