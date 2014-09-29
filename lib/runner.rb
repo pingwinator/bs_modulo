@@ -109,7 +109,7 @@ module Runner
     config['runtime'] = {
       'workspace'     => workspace,
       'project_dir'   => project_dir,
-      'configuration' => configuration
+      'configuration' => configuration,
       'branch'        => branch
     }
 
