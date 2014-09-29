@@ -41,6 +41,10 @@ command :build do |c|
   c.syntax = '[WORKSPACE=/path/to/project] [CONFIGURATION=configuration_name] builder build [build_config_file]'
   c.description = 'Run build'
   c.action do |args, options|
+    if ENV['BRANCH']
+      branch = ENV['BRANCH']
+      system = %Q[git checkout #{branch}]
+    end
     Runner::run args
   end
 end
@@ -62,10 +66,12 @@ command :branch do |c|
       workspace = real_dir Dir::pwd
     end
 
-    
-    command = %Q[!git fetch origin && git reset --hard origin/#{branch} && git clean -f -d]
-    
-    info command
-    #result = system command
+    if File.exist?(workspace + '.git') 
+      command = %Q[git reset --hard && git clean -f -d && git checkout #{branch} && git fetch origin && git reset --hard origin/#{branch} && git clean -f -d]
+      info command
+      result = system command
+    else 
+      info %Q[branch skipped]
+    end
   end
 end
