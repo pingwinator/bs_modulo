@@ -45,7 +45,7 @@ command :build do |c|
       branch = ENV['BRANCH']
       system %Q[git checkout #{branch}]
     end
-    #Runner::run args
+    Runner::run args
   end
 end
 
