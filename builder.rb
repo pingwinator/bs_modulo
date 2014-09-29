@@ -43,9 +43,9 @@ command :build do |c|
   c.action do |args, options|
     if ENV['BRANCH']
       branch = ENV['BRANCH']
-      system = %Q[git checkout #{branch}]
+      system %Q[git checkout #{branch}]
     end
-    Runner::run args
+    #Runner::run args
   end
 end
 
