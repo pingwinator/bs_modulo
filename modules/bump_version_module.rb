@@ -7,14 +7,15 @@ class BumpVersionModule < BaseModule
     info "Bumping version..."
     
     begin
-      system %Q[git pull origin #{config.branch.name}] or fail "failed pulling remote repos"
+      branch_name = `git rev-parse --abbrev-ref HEAD` #current branch name
+      system %Q[git pull origin #{branch_name}] or fail "failed pulling remote repos"
       
       version, build_number = self.bump_version
       self.update_marketing_version config, version, build_number
       
       system %Q[git commit -am "AUTOBUILD -- configuration: #{config.runtime.configuration}, ver: #{version}, build: #{build_number}"]
       info "Push updated version numbers to git"
-      result = system %Q[git push origin #{config.branch.name}]
+      result = system %Q[git push origin #{branch_name}]
       unless result
         puts "\nFailed pushing data to repo, waiting 5 seconds before retry..."
         system %Q[git reset --hard HEAD^]
