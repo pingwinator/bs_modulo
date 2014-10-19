@@ -1,5 +1,5 @@
 require "yaml"
-require "deep_symbolize.rb"
+require_relative "deep_symbolize.rb"
 require "hashr"
 
 module Loader

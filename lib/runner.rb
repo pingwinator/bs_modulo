@@ -1,5 +1,5 @@
 require "hashr"
-require "hook"
+require_relative "hook"
 
 module Runner
   class Runner
@@ -71,10 +71,10 @@ module Runner
   end
 
   def self.run args
-    require "loader.rb"
-    require "android_version.rb"
-    require "base_module.rb"
-    require "properties.rb"
+    require_relative "loader.rb"
+    require_relative "android_version.rb"
+    require_relative "base_module.rb"
+    require_relative "properties.rb"
 
     ## check input parameters
     if ENV['CONFIGURATION']

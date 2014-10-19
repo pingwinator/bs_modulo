@@ -71,3 +71,8 @@ command :branch do |c|
     end
   end
 end
+
+
+# ENV['WORKSPACE'] = '/Users/macuser/Projects/LifelikeClassifieds'
+# ENV['CONFIGURATION'] = 'adhoc'
+# Runner::run ['builder.yml']

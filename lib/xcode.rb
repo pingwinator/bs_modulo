@@ -1,4 +1,4 @@
-require "settings"
+require_relative "settings"
 
 class Xcode
   def self.switch_to_version version, path

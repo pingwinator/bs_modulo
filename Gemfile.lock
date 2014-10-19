@@ -4,6 +4,7 @@ GEM
     activesupport (3.2.14)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
+    annotate (2.4.1.beta1)
     colored (1.2)
     commander (4.1.4)
       highline (~> 1.6.11)
@@ -17,7 +18,6 @@ GEM
     plist (3.1.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rmagick (2.13.2)
     xcodeproj (0.9.0)
       activesupport (~> 3.2.13)
       colored (~> 1.2)
@@ -27,12 +27,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  annotate (~> 2.4.1.beta)
   commander
   hashr (~> 0.0.22)
   json (~> 1.7.6)
   ocunit2junit
   plist (~> 3.1.0)
   rest-client (~> 1.6.7)
-  rmagick (~> 2.13.2)
   xcodeproj (~> 0.9.0)
   xcpretty
