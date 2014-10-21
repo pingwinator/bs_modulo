@@ -1,7 +1,9 @@
 android:
-    properties_file: ~/sync/android.yml
-    keystore_dir: ~/sync/keystore/
+    properties_file: ~/Dropbox/sync/android/android.yml
+    keystore_dir: ~/Dropbox/sync/android/keystores/
 xcode:
-    def:    /Path/To/Default/Xcode
-    v4:     /Path/To/4/Xcode
-    v5:     /Path/To/5/Xcode
+    properties_file: ~/Dropbox/sync/xcode/keychains.yml
+    keychain_dir: ~/Dropbox/sync/xcode/keychains/
+    def: /Applications/Xcode5.1.app/Contents/Developer
+    v6: /Applications/Xcode6.app/Contents/Developer
+    v5.1: /Applications/Xcode5.1.app/Contents/Developer

@@ -72,7 +72,7 @@ command :branch do |c|
   end
 end
 
-
+# just for tests
 # ENV['WORKSPACE'] = '/Users/macuser/Projects/LifelikeClassifieds'
-# ENV['CONFIGURATION'] = 'adhoc'
+# ENV['CONFIGURATION'] = 'ui_tests'
 # Runner::run ['builder.yml']

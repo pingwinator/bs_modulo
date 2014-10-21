@@ -11,6 +11,7 @@ xctool - [https://github.com/facebook/xctool](https://github.com/facebook/xctool
 	cd bs_modulo
 	bundle install
 	./builder.rb install
+	# add needed content to created ~/.bs_modulo.yml file (see exemples/global.yml file)
 	# check that /usr/local/bin is in your $PATH var
 
 #### Usage
