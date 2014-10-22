@@ -33,14 +33,14 @@ class UiTestsModule < BaseModule
     if result
       devices = config.ui_tests.devices.split(',')
       devices.each do |device|
-        self.test_ui device, config.ui_tests.scheme, config.ui_tests.script_path
+        self.test_ui device, config.ui_tests.app_name, config.ui_tests.script_path, config.ui_tests.env_vars.split(',')
       end
     else
       self.testsFailed
     end
   end
 
-  def self.test_ui device, app_name, script_path, should_retry_once = true
+  def self.test_ui device, app_name, script_path, env_vars, should_retry_once = true
     openSimulator
 
     # remove previous plist reports
@@ -55,6 +55,11 @@ class UiTestsModule < BaseModule
         "-e UIARESULTSPATH #{@automation_results_dir}",
         %Q[-e UIASCRIPT "#{script_path}"]
     ]
+    #append environment variables
+    env_vars.each do |var|
+      parameters.push "-e " + var
+    end
+
     cmd = %Q[set -o pipefail && instruments #{parameters.join(' ')} | tee "$TMPDIR/buildLog.txt" | xcpretty --no-utf]
 
     info %Q[run instruments for ui tests on "#{device}"...]
@@ -63,7 +68,7 @@ class UiTestsModule < BaseModule
       self.createReport device
     elsif should_retry_once
       # we will make one retry
-      self.test_ui device, app_name, script_path, false
+      self.test_ui device, app_name, script_path, env_vars, false
     else
       self.testsFailed
     end

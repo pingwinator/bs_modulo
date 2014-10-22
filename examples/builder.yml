@@ -4,6 +4,7 @@ queue:
     - bump_version
     - build
     - tests
+    - ui_tests
     - pack_ipa
     - pack_dsym
     - online_docs
@@ -46,6 +47,14 @@ default: &default
     tests:
         enabled:        false
         target:         TestProjectTest
+    ui_tests:
+        enabled:        false
+        scheme:         TestProject
+        app_name:       test_project_name
+        env_vars:       "UI_TESTS 1, etc"
+        device_family:  "1,2"
+        script_path:    "path to you script"
+        devices:        "iPhone 5s (8.1 Simulator),iPad 2 (8.1 Simulator),etc"
     pack_ipa:
         enabled:    true
         naming:
