@@ -5,9 +5,15 @@ class UiTestsModule < BaseModule
   @build_dir = '/tmp/UITests'
   @automation_results_dir = './automation_results'
   @junitReports_dir = './test-reports'
+  @simulators = []
 
   def self.run config
     info 'Running ui tests...'
+
+    info 'getting list of available simulators...'
+    IO.popen('instruments -s devices') { |io| while (line = io.gets) do
+                                                @simulators.push line if line.include? '['
+                                              end }
 
     # remove previous junit reports
     self.recreateDir @junitReports_dir
@@ -31,9 +37,10 @@ class UiTestsModule < BaseModule
     info 'build project for ui tests...'
     result = system cmd
     if result
-      devices = config.ui_tests.devices.split(',')
+      devices = if config.ui_tests.devices? then config.ui_tests.devices.split(',') else [] end
+      env_vars = if config.ui_tests.env_vars? then config.ui_tests.env_vars.split(',') else [] end
       devices.each do |device|
-        self.test_ui device, config.ui_tests.app_name, config.ui_tests.script_path, config.ui_tests.env_vars.split(',')
+        self.test_ui device, config.ui_tests.app_name, config.ui_tests.script_path, env_vars
       end
     else
       self.testsFailed
@@ -49,7 +56,7 @@ class UiTestsModule < BaseModule
     parameters = [
         "-v",
         "-t Automation.tracetemplate",
-        %Q[-w "#{device}"],
+        %Q[-w "#{self.simulator device}"],
         "-D #{@automation_results_dir}/Trace",
         "#{@build_dir}/#{app_name}.app",
         "-e UIARESULTSPATH #{@automation_results_dir}",
@@ -92,4 +99,16 @@ class UiTestsModule < BaseModule
     fail "UI tests failed"
   end
 
+  def self.simulator device
+    cmd = %Q[instruments -s devices]
+    result = @simulators.first
+    @simulators.each do |simulator|
+      if simulator.include? device
+        result = simulator
+        break
+      end
+    end
+    result
+  end
+  
 end

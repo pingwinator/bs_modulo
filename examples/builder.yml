@@ -50,11 +50,11 @@ default: &default
     ui_tests:
         enabled:        false
         scheme:         TestProject
-        app_name:       test_project_name
+        app_name:       product_name
         env_vars:       "UI_TESTS 1, etc"
         device_family:  "1,2"
-        script_path:    "path to you script"
-        devices:        "iPhone 5s (8.1 Simulator),iPad 2 (8.1 Simulator),etc"
+        script_path:    "path/to/main/script"
+        devices:        "iPhone,iPad"
     pack_ipa:
         enabled:    true
         naming:
