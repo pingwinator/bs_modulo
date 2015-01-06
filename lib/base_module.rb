@@ -78,6 +78,15 @@ class BaseModule
     def hook! name
       @runner.hooks.fire name, :config => @runner.config
     end
-    
+
+    def closeSimulator
+      system %Q[killall -m -KILL "iPhone Simulator"]
+    end
+
+    def openSimulator
+      closeSimulator
+      system %Q[osascript -e 'activate application "iOS Simulator"']
+    end
+
   end
 end

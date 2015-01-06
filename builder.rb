@@ -71,3 +71,8 @@ command :branch do |c|
     end
   end
 end
+
+# just for tests
+# ENV['WORKSPACE'] = '/Users/macuser/Projects/LifelikeClassifieds'
+# ENV['CONFIGURATION'] = 'ui_tests'
+# Runner::run ['builder.yml']

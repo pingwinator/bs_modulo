@@ -4,6 +4,7 @@ GEM
     activesupport (3.2.14)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
+    annotate (2.4.1.beta1)
     colored (1.2)
     commander (4.1.4)
       highline (~> 1.6.11)
@@ -26,6 +27,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  annotate (~> 2.4.1.beta)
   commander
   hashr (~> 0.0.22)
   json (~> 1.7.6)

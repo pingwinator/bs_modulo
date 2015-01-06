@@ -5,7 +5,7 @@ class TestsModule < BaseModule
   
   def self.run config
     info 'Running tests...'
-    system %Q[killall -m -KILL "iPhone Simulator"]
+    closeSimulator
     
     parameters = [
       "-scheme #{config.tests.scheme}",
