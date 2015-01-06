@@ -21,7 +21,7 @@ class BuildModule < BaseModule
     
     ## building
     #command = %Q[xctool #{self.build_params config}]
-    command = %Q[set -o pipefail && xcodebuild #{self.build_params config} | tee "$TMPDIR/buildLog.txt" | xcpretty --no-utf]
+    command = %Q[set -o pipefail && xcodebuild #{self.build_params config} | tee "$TMPDIR/buildLog.txt" ]
     
     #info command
     result = system command

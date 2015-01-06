@@ -8,6 +8,7 @@ class TestflightModule < BaseModule
     params = {
       :api_token  => config.testflight.api_token,
       :team_token => config.testflight.team_token,
+      :distribution_lists => config.testflight.distribution_lists,
       :notify     => config.testflight.notify? ? 1 : 0
     }
 
