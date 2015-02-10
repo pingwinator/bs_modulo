@@ -80,7 +80,7 @@ class BaseModule
     end
 
     def closeSimulator
-      system %Q[killall -m -KILL "iPhone Simulator"]
+      system %Q[killall -m -KILL "iOS Simulator"]
     end
 
     def openSimulator
