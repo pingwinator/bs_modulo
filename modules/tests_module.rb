@@ -21,7 +21,7 @@ class TestsModule < BaseModule
     if config.tests.destination
       parameters.unshift %Q[-destination "#{config.tests.destination}"]
     else
-      parameters.unshift %Q[-destination "platform=iOS Simulator,name=iPhone Retina (4-inch)"]
+      parameters.unshift %Q[-destination "platform=iOS Simulator,name=iPhone 5s"]
     end
     cmd = %Q[set -o pipefail && xcodebuild #{parameters.join(' ')} | tee "$TMPDIR/buildLog.txt" | xcpretty --no-utf -r junit -o test-reports/junit-report.xml]
     #info cmd
