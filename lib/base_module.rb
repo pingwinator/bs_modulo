@@ -83,9 +83,31 @@ class BaseModule
       system %Q[killall -m -KILL "iOS Simulator"]
     end
 
+    def osascript(script)
+      system 'osascript', *script.split(/\n/).map { |line| ['-e', line] }.flatten
+    end
+
+    def resetSimulator
+      openSimulator
+      osascript 'tell application "System Events"
+                  tell process "iOS Simulator"
+                    tell menu bar 1
+                      tell menu bar item "iOS Simulator"
+                        tell menu "iOS Simulator"
+                          click menu item "Reset Content and Settings…"
+                        end tell
+                      end tell
+                    end tell
+                    tell window 1
+                      click button "Reset"
+                    end tell
+                  end tell
+                end tell'
+    end
+
     def openSimulator
       closeSimulator
-      system %Q[osascript -e 'activate application "iOS Simulator"']
+      osascript 'activate application "iOS Simulator"'
     end
 
   end

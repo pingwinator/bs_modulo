@@ -5,7 +5,7 @@ class TestsModule < BaseModule
   
   def self.run config
     info 'Running tests...'
-    closeSimulator
+    resetSimulator
     
     parameters = [
       "-scheme #{config.tests.scheme}",
