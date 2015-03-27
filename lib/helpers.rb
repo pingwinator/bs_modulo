@@ -70,6 +70,10 @@ def cpdir src, dst, exclude=[]
   end
 end
 
+def mkdir dir
+  FileUtils.mkdir dir, {:verbose => true}
+end
+
 def mv src, dest
   FileUtils.mv src, dest, {:verbose => true}
 end

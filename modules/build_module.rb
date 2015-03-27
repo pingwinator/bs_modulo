@@ -5,6 +5,8 @@ class BuildModule < BaseModule
   config_key 'build'
   defaults :doclean => true, :enabled => true
   build_profile real_file('~/Library/MobileDevice/Provisioning Profiles/build.mobileprovision')
+  build_profiles_dir real_dir('~/Library/MobileDevice/Provisioning Profiles')
+  tmp_dir  ENV['TMPDIR']+'buildprofile_'+Time.now.to_i.to_s
   check_enabled!
   
   def self.run config
@@ -15,8 +17,9 @@ class BuildModule < BaseModule
       fail %Q[Build configuration "#{config.build.configuration}" not found in project "#{config.build.project.name}"]
     end
     
-    self.copy_provision_profile config
     self.unlock_keychain config
+    self.copy_provision_profile config
+    
 
     
     ## building
@@ -27,7 +30,6 @@ class BuildModule < BaseModule
     result = system command
     ## done building
     
-    self.remove_provision_profile
     hook! :build_complete
     unless result
        info "full build log"
@@ -84,7 +86,15 @@ class BuildModule < BaseModule
   def self.copy_provision_profile config
     if config.profile.file
       profile_file  = real_file config.profile.file
+      mv(build_profiles_dir, tmp_dir)
+      mkdir(build_profiles_dir)
       cp(profile_file, build_profile) if File.exists?(profile_file) && File.file?(profile_file)
+      rollback = proc {
+          info "swith to default profiles"
+          self.remove_provision_profile
+        }
+        hook :failed, rollback
+        hook :complete, rollback
     end
   end
 
@@ -114,6 +124,8 @@ class BuildModule < BaseModule
   
   def self.remove_provision_profile
     rm_f build_profile if File.exists? build_profile
+    rm_rf build_profiles_dir
+    mv(tmp_dir, build_profiles_dir)
   end
   
 end
