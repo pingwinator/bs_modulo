@@ -89,6 +89,9 @@ class BuildModule < BaseModule
       mv(build_profiles_dir, tmp_dir)
       mkdir(build_profiles_dir)
       cp(profile_file, build_profile) if File.exists?(profile_file) && File.file?(profile_file)
+      config.profile.extra_files.each do |extra_file|
+        cp(extra_file, build_profiles_dir) if File.exists?(extra_file)
+      end
       rollback = proc {
           info "swith to default profiles"
           self.remove_provision_profile
