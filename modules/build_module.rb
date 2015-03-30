@@ -89,9 +89,12 @@ class BuildModule < BaseModule
       mv(build_profiles_dir, tmp_dir)
       mkdir(build_profiles_dir)
       cp(profile_file, build_profile) if File.exists?(profile_file) && File.file?(profile_file)
-      config.profile.extra_files.each do |extra_file|
-          widget_file_dropbox = real_file extra_file
-          cp(widget_file_dropbox, build_profiles_dir) if File.exists?(widget_file_dropbox)
+      extra_files = config.profile.extra_files
+      if extra_files
+          extra_files.each do |extra_file|
+              widget_file_dropbox = real_file extra_file
+              cp(widget_file_dropbox, build_profiles_dir) if File.exists?(widget_file_dropbox)
+          end
       end
       rollback = proc {
           info "swith to default profiles"
