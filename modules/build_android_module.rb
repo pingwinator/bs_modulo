@@ -42,7 +42,7 @@ class BuildAndroidModule < BaseModule
         config.runtime.apk_file = config.runtime.project_dir + "build/outputs/apk/result.apk"
       end
       config.runtime.gradlew_path = config.runtime.workspace + config.build_android.main_gradle_path
-      system %Q[sh #{config.runtime.gradlew_path}/gradlew #{config.build_android.gradle_params} -Poutput_file=#{config.runtime.apk_file}] or fail "build project"
+      system %Q[sh #{config.runtime.gradlew_path}/gradlew #{config.build_android.gradle_params} -p=#{config.runtime.gradlew_path} -Poutput_file=#{config.runtime.apk_file}] or fail "build project"
     else
       system %Q[ant #{config.build_android.configuration}] or fail "build project"
     end  
