@@ -19,6 +19,12 @@ class BuildAndroidModule < BaseModule
       if gradle 
         info 'Updating gradle.properties file...'
         project_props_file = config.runtime.project_dir + 'gradle.properties'
+        rollback = proc {
+          info "remove gradle.properties file"
+          rm_f project_props_file if File.exists? project_props_file or fail "failed remove gradle.properties file"
+        }
+        hook :failed, rollback
+        hook :complete, rollback
       else 
         info 'Updating ant.properties file...'
         project_props_file = config.runtime.project_dir + 'ant.properties'
