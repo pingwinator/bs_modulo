@@ -4,8 +4,9 @@
 bundle install
 
 #python libs
-sudo easy_install nose
-sudo easy_install poster
-sudo easy_install enum
-sudo easy_install enum34
-sudo easy_install gevent
+sudo easy_install pip
+sudo pip install nose
+sudo pip install poster
+sudo pip uninstall enum
+sudo pip install enum34
+sudo pip install gevent
