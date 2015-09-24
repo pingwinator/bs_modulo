@@ -63,7 +63,7 @@ command :branch do |c|
     end
 
     if File.exist?(workspace + '.git') 
-      command = %Q[git reset --hard && git clean -f -d && git checkout #{branch} && git fetch origin && git reset --hard origin/#{branch} && git clean -f -d]
+      command = %Q[git reset --hard && git clean -f -d && git fetch origin && git checkout #{branch} && git reset --hard origin/#{branch} && git clean -f -d]
       info command
       result = system command
     else 
