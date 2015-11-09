@@ -48,12 +48,18 @@ end
 command :branch do |c|
   c.syntax = '[WORKSPACE=/path/to/project] [BRANCH=branch_name] builder build'
   c.description = 'Switch to BRANCH and fetch all data' 
+  c.option '-c', '--current', 'Update current branch'
   c.action do |args, options|
     ## check input parameters
-    if ENV['BRANCH']
-      branch = ENV['BRANCH']
-    else
-      branch = 'master'
+    if options.current
+      branch = `git rev-parse --abbrev-ref HEAD`
+      branch.delete!("\n")
+    else 
+      if ENV['BRANCH']
+        branch = ENV['BRANCH']
+      else
+        branch = 'master'
+      end
     end
 
     if ENV['WORKSPACE']
