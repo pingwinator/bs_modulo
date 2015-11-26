@@ -30,7 +30,8 @@ class CleanAndroidModule < BaseModule
         project_props.save_to_file project_props_file
       end
       config.runtime.gradlew_path = config.runtime.workspace + config.build_android.main_gradle_path
-      system %Q[sh #{config.runtime.gradlew_path}/gradlew clean -p=#{config.runtime.gradlew_path} -Poutput_file=#{config.runtime.apk_file}] or fail "clean project"
+      config.runtime.absolute_project_dir = config.runtime.workspace + config.project_dir
+      system %Q[sh #{config.runtime.gradlew_path}/gradlew clean -p=#{config.runtime.absolute_project_dir} -Poutput_file=#{config.runtime.apk_file}] or fail "clean project"
     else  
     # clean deps
      deps      = config.build_android.dependencies
