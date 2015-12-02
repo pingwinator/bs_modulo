@@ -78,6 +78,20 @@ command :branch do |c|
   end
 end
 
+
+command :killsim do |c|
+  c.syntax = 'builder killsim'
+  c.description = 'Close ios simmulator'
+  c.action do |args, options|
+     closeXcode6sim = %Q[killall "iOS Simulator"]
+      info closeXcode6sim
+      result = system closeXcode6sim
+      closeXcode7sim = %Q[killall "Simulator"]
+      info closeXcode7sim
+      result = system closeXcode7sim
+  end
+end
+
 # just for tests
 # ENV['WORKSPACE'] = '/Users/macuser/Projects/LifelikeClassifieds'
 # ENV['CONFIGURATION'] = 'ui_tests'
