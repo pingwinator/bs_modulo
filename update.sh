@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+#brew
+brew install pandoc
+
 #bundle
 bundle install
 
