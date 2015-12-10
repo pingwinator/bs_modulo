@@ -13,4 +13,4 @@ pip install nose --user --upgrade
 pip install poster --user --upgrade
 pip install enum34 --user --upgrade
 CFLAGS='-std=c99' pip install --user gevent --upgrade
-sudo -H pip uninstall enum -y
+#sudo -H pip uninstall enum -y
