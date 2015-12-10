@@ -2,14 +2,15 @@
 
 #brew
 brew install pandoc
+brew install libevent #for gevent
 
 #bundle
 bundle install
 
 #python libs
 sudo easy_install pip
-sudo -H pip install nose --upgrade
-sudo -H pip install poster --upgrade
-sudo -H pip install enum34 --upgrade
-sudo -H pip install gevent --upgrade
+pip install --user --upgrade
+pip install --user --upgrade
+pip install --user --upgrade
+CFLAGS='-std=c99' pip install --user gevent --upgrade
 sudo -H pip uninstall enum34 -y
