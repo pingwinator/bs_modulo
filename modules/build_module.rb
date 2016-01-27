@@ -66,6 +66,7 @@ class BuildModule < BaseModule
     build_parameters = [
       %Q[-configuration "#{config.build.configuration}"],
       %Q[-sdk "#{config.build.sdk}"],
+      %Q[CODE_SIGN_IDENTITY="#{config.profile.identity}"],
       %Q[CONFIGURATION_BUILD_DIR="#{config.runtime.build_dir}"],
       (%Q[clean] if config.build.doclean?),
       %Q[build]
