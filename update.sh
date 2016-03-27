@@ -5,7 +5,7 @@ brew install pandoc
 brew install libevent #for gevent
 
 #bundle
-bundle install
+bundle update
 
 #python libs
 sudo easy_install pip
