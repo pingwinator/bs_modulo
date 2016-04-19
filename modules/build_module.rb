@@ -62,11 +62,7 @@ class BuildModule < BaseModule
   end
   
   def self.check_export_options_file config
-    retult = false
-    FileUtils.cd(config.runtime.project_dir) do
-      result = File.exists? "export.plist"
-    end
-    retuls
+    File.exists? "#{config.runtime.project_dir}export.plist"
   end
   
   def self.project_name config
