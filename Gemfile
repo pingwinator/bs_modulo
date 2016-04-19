@@ -7,3 +7,4 @@ gem "commander"
 gem 'xcodeproj', '~> 0.28.2'
 gem "xcpretty"
 gem "deliver"
+gem "gym"
