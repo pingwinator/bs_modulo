@@ -112,7 +112,7 @@ class BuildModule < BaseModule
       %Q[--sdk "#{config.build.sdk}"],
       %Q[-a],
       %Q[--export_options export.plist],
-      %Q[-o "#{config.runtime.build_dir}build/"]
+      %Q[-o "#{config.runtime.build_dir}build/"],
       (%Q[-c] if config.build.doclean?),
       %Q[build]
     ]
