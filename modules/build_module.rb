@@ -24,7 +24,7 @@ class BuildModule < BaseModule
     #command = %Q[xctool #{self.build_params config}]
     if config.build.build_with_gym?
       info 'Building using gym...'
-      unless check_export_options_file
+      unless check_export_options_file(config)
         fail %Q[Export options file "export.plist" doesn't found]
       end
       command = %Q{gym #{self.gym_build_params config} | tee "$TMPDIR/buildLog.txt"}
@@ -61,7 +61,7 @@ class BuildModule < BaseModule
     configurations.include? configuration_name
   end
   
-  def self.check_export_options_file
+  def self.check_export_options_file config
     retult = false
     FileUtils.cd(config.runtime.build_dir) do
       result = File.exists? "export.plist"
