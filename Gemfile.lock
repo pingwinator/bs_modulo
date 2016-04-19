@@ -1,12 +1,15 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (3.2.22.2)
-      i18n (~> 0.6, >= 0.6.4)
-      multi_json (~> 1.0)
+    activesupport (4.2.6)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
     addressable (2.3.8)
-    annotate (2.4.1.beta1)
     babosa (1.0.2)
+    claide (0.9.1)
     colored (1.2)
     commander (4.3.5)
       highline (~> 1.7.2)
@@ -15,12 +18,12 @@ GEM
       commander (>= 4.3.5)
       highline (>= 1.7.1)
       security
-    deliver (1.10.5)
+    deliver (1.11.0)
       credentials_manager (>= 0.12.0, < 1.0.0)
       fastimage (~> 1.6)
-      fastlane_core (>= 0.37.0, < 1.0.0)
+      fastlane_core (>= 0.41.2, < 1.0.0)
       plist (~> 3.1.0)
-      spaceship (>= 0.19.0, < 1.0.0)
+      spaceship (>= 0.24.1, < 1.0.0)
     domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
     excon (0.45.4)
@@ -33,7 +36,7 @@ GEM
       faraday (>= 0.7.4, < 0.10)
     fastimage (1.9.0)
       addressable (~> 2.3.5)
-    fastlane_core (0.39.1)
+    fastlane_core (0.41.2)
       babosa
       colored
       commander (= 4.3.5)
@@ -51,21 +54,24 @@ GEM
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
-    json (1.7.7)
-    mime-types (1.25.1)
+    json (1.8.3)
+    mime-types (2.99.1)
+    minitest (5.8.4)
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    ocunit2junit (1.4)
+    netrc (0.11.0)
     plist (3.1.0)
-    rest-client (1.6.9)
-      mime-types (~> 1.16)
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rouge (1.10.1)
     rubyzip (1.1.7)
     security (0.1.3)
     sentry-raven (0.15.6)
       faraday (>= 0.7.6)
-    spaceship (0.24.1)
+    spaceship (0.25.1)
       colored
       credentials_manager (>= 0.9.0)
       faraday (~> 0.9)
@@ -75,11 +81,15 @@ GEM
       multi_xml (~> 0.5)
       plist (~> 3.1)
     terminal-table (1.4.5)
+    thread_safe (0.3.5)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
-    xcodeproj (0.9.0)
-      activesupport (~> 3.2.13)
+    xcodeproj (0.28.2)
+      activesupport (>= 3)
+      claide (~> 0.9.1)
       colored (~> 1.2)
     xcpretty (0.2.2)
       rouge (~> 1.8)
@@ -88,13 +98,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  annotate (~> 2.4.1.beta)
   commander
   deliver
   hashr (~> 0.0.22)
-  json (~> 1.7.6)
-  ocunit2junit
-  plist (~> 3.1.0)
-  rest-client (~> 1.6.7)
-  xcodeproj (~> 0.9.0)
+  json
+  rest-client (~> 1.8)
+  xcodeproj (~> 0.28.2)
   xcpretty
+
+BUNDLED WITH
+   1.11.2

@@ -1,9 +1,8 @@
 require "xcodeproj"
-require 'plist'
 
 class BuildModule < BaseModule
   config_key 'build'
-  defaults :doclean => true, :enabled => true
+  defaults :doclean => true, :enabled => true, :build_with_gym => false
   build_profile real_file('~/Library/MobileDevice/Provisioning Profiles/build.mobileprovision')
   build_profiles_dir real_dir('~/Library/MobileDevice/Provisioning Profiles')
   tmp_dir  ENV['TMPDIR']+'buildprofile_'+Time.now.to_i.to_s
@@ -20,15 +19,28 @@ class BuildModule < BaseModule
     self.unlock_keychain config
     self.copy_provision_profile config
     
-
     
     ## building
     #command = %Q[xctool #{self.build_params config}]
-    command = %Q[set -o pipefail && xcodebuild #{self.build_params config} | tee "$TMPDIR/buildLog.txt" | xcpretty --no-utf]
+    if config.build.build_with_gym?
+      info 'Building using gym...'
+      unless check_export_options_file
+        fail %Q[Export options file "export.plist" doesn't found]
+      end
+      command = %Q{gym #{self.gym_build_params config} | tee "$TMPDIR/buildLog.txt"}
+    else
+      info 'Building using xcodebuild...'
+      command = %Q[set -o pipefail && xcodebuild #{self.build_params config} | tee "$TMPDIR/buildLog.txt" | xcpretty --no-utf]
+    end
     
     #info command
     result = system command
     ## done building
+    
+    if config.build.build_with_gym?
+      config.runtime.ipa_file = config.runtime.build_dir + "build/build.ipa"
+      config.runtime.dsym_file = config.runtime.build_dir + "build/build.dSYM.zip"
+    end
     
     hook! :build_complete
     unless result
@@ -47,6 +59,14 @@ class BuildModule < BaseModule
     end
     configurations = project.build_configurations.map(&:name)
     configurations.include? configuration_name
+  end
+  
+  def self.check_export_options_file
+    retult = false
+    FileUtils.cd(config.runtime.build_dir) do
+      result = File.exists? "export.plist"
+    end
+    retuls
   end
   
   def self.project_name config
@@ -80,6 +100,23 @@ class BuildModule < BaseModule
       build_parameters.unshift %Q[-scheme "#{config.build.project.target}"]
     end
     
+    build_parameters.join(' ')
+  end
+  
+  def self.gym_build_params config
+    build_parameters = [
+      %Q[-w "#{config.build.workspace.name}.xcworkspace"],
+      %Q[-s "#{config.build.workspace.scheme}"],
+      %Q[-n build],
+      %Q[-q "#{config.build.configuration}"],
+      %Q[--sdk "#{config.build.sdk}"],
+      %Q[-a],
+      %Q[--export_options export.plist],
+      %Q[-o "#{config.runtime.build_dir}build/"]
+      (%Q[-c] if config.build.doclean?),
+      %Q[build]
+    ]
+
     build_parameters.join(' ')
   end
   
