@@ -38,8 +38,8 @@ class BuildModule < BaseModule
     ## done building
     
     if config.build.build_with_gym?
-      config.runtime.ipa_file = config.runtime.build_dir + "build/build.ipa"
-      config.runtime.dsym_file = config.runtime.build_dir + "build/build.dSYM.zip"
+      config.runtime.ipa_file = config.runtime.project_dir + "build/build.ipa"
+      config.runtime.dsym_file = config.runtime.project_dir + "build/build.dSYM.zip"
     end
     
     hook! :build_complete
@@ -63,7 +63,7 @@ class BuildModule < BaseModule
   
   def self.check_export_options_file config
     retult = false
-    FileUtils.cd(config.runtime.build_dir) do
+    FileUtils.cd(config.runtime.project_dir) do
       result = File.exists? "export.plist"
     end
     retuls
@@ -112,7 +112,7 @@ class BuildModule < BaseModule
       %Q[--sdk "#{config.build.sdk}"],
       %Q[-a],
       %Q[--export_options export.plist],
-      %Q[-o "#{config.runtime.build_dir}build/"],
+      %Q[-o "#{config.runtime.project_dir}build/"],
       (%Q[-c] if config.build.doclean?),
       %Q[build]
     ]
