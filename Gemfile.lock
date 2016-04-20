@@ -49,6 +49,12 @@ GEM
       rubyzip (~> 1.1.6)
       sentry-raven (~> 0.15)
       terminal-table (~> 1.4.5)
+    gym (1.6.2)
+      fastlane_core (>= 0.36.1, < 1.0.0)
+      plist
+      rubyzip (>= 1.1.7)
+      terminal-table
+      xcpretty (>= 0.2.1)
     hashr (0.0.22)
     highline (1.7.8)
     http-cookie (1.0.2)
@@ -100,6 +106,7 @@ PLATFORMS
 DEPENDENCIES
   commander
   deliver
+  gym
   hashr (~> 0.0.22)
   json
   rest-client (~> 1.8)
