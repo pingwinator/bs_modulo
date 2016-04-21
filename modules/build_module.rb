@@ -107,7 +107,7 @@ class BuildModule < BaseModule
       %Q[-q "#{config.build.configuration}"],
       %Q[-a],
       %Q[--use_legacy_build_api],
-      %Q[--export_options export.plist],
+      %Q[-i #{config.profile.identity}],
       %Q[-o "#{config.runtime.project_dir}build/"],
       (%Q[-c] if config.build.doclean?),
       %Q[build]
