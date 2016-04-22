@@ -25,18 +25,14 @@ class HockeyappModule < BaseModule
           :ipa => config.runtime.ipa_file
         }
         
-        if config.pack_dsym && config.pack_dsym.enabled?
-          files[:dsym] = config.runtime.dsym_file
-        end
+        files[:dsym] = config.runtime.dsym_file unless config.runtime.dsym_file.nil?
         
       when 'osx'
         files = {
           :ipa => config.runtime.zip_file
         }
         
-        if config.pack_dsym && config.pack_dsym.enabled?
-          files[:dsym] = config.runtime.dsym_file
-        end
+        files[:dsym] = config.runtime.dsym_file unless config.runtime.dsym_file.nil?
         
       when 'android'
         apk_file = config.runtime.apk_file
