@@ -40,7 +40,7 @@ class BuildModule < BaseModule
     
     if config.build.build_with_gym?
       config.runtime.ipa_file = config.runtime.project_dir + "build/build.ipa"
-      config.runtime.dsym_file = config.runtime.project_dir + "build/build.dSYM.zip"
+      config.runtime.dsym_file = config.runtime.project_dir + "build/build.app.dSYM.zip"
 
       puts "Paths: IPA: #{config.runtime.ipa_file}\n dSYM: #{config.runtime.dsym_file}"
     end
