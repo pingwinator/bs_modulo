@@ -5,6 +5,7 @@ class BuildModule < BaseModule
   defaults :doclean => true, :enabled => true, :build_with_gym => false
   build_profile real_file('~/Library/MobileDevice/Provisioning Profiles/build.mobileprovision')
   build_profiles_dir real_dir('~/Library/MobileDevice/Provisioning Profiles')
+  archs_temp_dir real_dir('/tmp/archs')
   tmp_dir  ENV['TMPDIR']+'buildprofile_'+Time.now.to_i.to_s
   check_enabled!
   
@@ -112,9 +113,17 @@ class BuildModule < BaseModule
       %Q[--use_legacy_build_api],
       %Q[-i #{config.profile.identity}],
       %Q[-o "#{config.runtime.project_dir}build/"],
+      %Q[-b #{archs_temp_dir}],
       (%Q[-c] if config.build.doclean?),
       %Q[build]
     ]
+
+    rollback = proc {
+      rm_rf archs_temp_dir
+    }
+
+    hook :failed, rollback
+    hook :complete, rollback
 
     build_parameters.join(' ')
   end
