@@ -8,19 +8,19 @@ class BuildModule < BaseModule
   archs_temp_dir real_dir('/tmp/archs')
   tmp_dir  ENV['TMPDIR']+'buildprofile_'+Time.now.to_i.to_s
   check_enabled!
-  
+
   def self.run config
     info 'Building project...'
-    
+
     project_name = self.project_name(config)
     unless check_build_configuration project_name, config.build.configuration
       fail %Q[Build configuration "#{config.build.configuration}" not found in project "#{config.build.project.name}"]
     end
-    
+
     self.unlock_keychain config
     self.copy_provision_profile config
-    
-    
+
+
     ## building
     #command = %Q[xctool #{self.build_params config}]
     if config.build.build_with_gym?
@@ -33,19 +33,19 @@ class BuildModule < BaseModule
       info 'Building using xcodebuild...'
       command = %Q[set -o pipefail && xcodebuild #{self.build_params config} | tee "$TMPDIR/buildLog.txt" | xcpretty --no-utf]
     end
-    
+
     #info command
     info "Run command: #{command}"
     result = system command
     ## done building
-    
+
     if config.build.build_with_gym?
       config.runtime.ipa_file = config.runtime.project_dir + "build/build.ipa"
       config.runtime.dsym_file = config.runtime.project_dir + "build/build.app.dSYM.zip"
 
       puts "Paths: IPA: #{config.runtime.ipa_file}\n dSYM: #{config.runtime.dsym_file}"
     end
-    
+
     hook! :build_complete
     unless result
        info "full build log"
@@ -53,7 +53,7 @@ class BuildModule < BaseModule
        fail "Build failed"
     end
   end
-  
+
   private
   def self.check_build_configuration project_name, configuration_name
     begin
@@ -64,11 +64,11 @@ class BuildModule < BaseModule
     configurations = project.build_configurations.map(&:name)
     configurations.include? configuration_name
   end
-  
+
   def self.check_export_options_file config
     File.exists? "#{config.runtime.project_dir}export.plist"
   end
-  
+
   def self.project_name config
     if config.using_pods?
       workspace = Xcodeproj::Workspace.new_from_xcworkspace "#{config.build.workspace.name}.xcworkspace"
@@ -81,13 +81,13 @@ class BuildModule < BaseModule
     end
     project_name
   end
-  
+
   def self.build_params config
     build_parameters = [
       %Q[-configuration "#{config.build.configuration}"],
       %Q[-sdk "#{config.build.sdk}"],
       %Q[CODE_SIGN_IDENTITY="#{config.profile.identity}"],
-      %Q[CONFIGURATION_BUILD_DIR="#{config.runtime.build_dir}"],
+      %Q[BUILD_DIR="#{config.runtime.build_dir}../"],
       (%Q[clean] if config.build.doclean?),
       %Q[build]
     ]
@@ -99,10 +99,10 @@ class BuildModule < BaseModule
       build_parameters.unshift %Q[-project "#{config.build.project.name}.xcodeproj"]
       build_parameters.unshift %Q[-scheme "#{config.build.project.target}"]
     end
-    
+
     build_parameters.join(' ')
   end
-  
+
   def self.gym_build_params config
     build_parameters = [
       %Q[-w "#{config.build.workspace.name}.xcworkspace"],
@@ -127,7 +127,7 @@ class BuildModule < BaseModule
 
     build_parameters.join(' ')
   end
-  
+
   ## provision profile
   def self.copy_provision_profile config
     if config.profile.file
@@ -165,7 +165,7 @@ class BuildModule < BaseModule
 
         rollback = proc {
           info "swith to default keychain"
-          system %Q[security lock-keychain  #{keychain_file}] 
+          system %Q[security lock-keychain  #{keychain_file}]
           system %Q[security default-keychain -s login.keychain] or fail "failed switch keychain"
           system %Q[security list-keychains -s login.keychain] or fail "failed switch keychain"
         }
@@ -174,11 +174,11 @@ class BuildModule < BaseModule
       end
     end
   end
-  
+
   def self.remove_provision_profile
     rm_f build_profile if File.exists? build_profile
     rm_rf build_profiles_dir
     mv(tmp_dir, build_profiles_dir)
   end
-  
+
 end
