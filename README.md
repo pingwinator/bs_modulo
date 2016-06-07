@@ -6,7 +6,7 @@ Bundler gem -- `gem install bundler`
 
 #### Install
 
-	git clone git@gitlab.postindustria.com:backend/mobile-build-system.git
+	git clone git@github.com:pingwinator/bs_modulo.git
 	cd bs_modulo
 	bundle install
 	./builder.rb install
