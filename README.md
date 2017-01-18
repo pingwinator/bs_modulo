@@ -18,5 +18,5 @@ Execute command in project directory (where builder.yml file is located)
 
 	BRANCH=master WORKSPACE=/project/dir CONFIGURATION=configuration_name builder build [builder.yml]
 
-Usage [documentation](http://gitlab.postindustria.com/backend/mobile-build-system/blob/master/docs/USAGE.md).  
-Module's config params [documentation](http://gitlab.postindustria.com/backend/mobile-build-system/blob/master/docs/CONFIGURATION.md).
+Usage [documentation](https://github.com/pingwinator/bs_modulo/blob/master/docs/USAGE.md).  
+Module's config params [documentation](https://github.com/pingwinator/bs_modulo/blob/master/docs/CONFIGURATION.md).
