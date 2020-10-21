@@ -15,7 +15,7 @@
 
 ### NB!! CONFIG FILE MUST BE LOCATED IN `MASTER` BRANCH!
 
-1. Save [builder.yml](http://gitlab.postindustria.com/backend/mobile-build-system/raw/master/examples/builder.yml) ([builder_android.yml](http://gitlab.postindustria.com/backend/mobile-build-system/raw/master/examples/builder_android.yml) for android) file into your project's repo root folder.
+1. Save [builder.yml](https://raw.githubusercontent.com/pingwinator/bs_modulo/master/examples/builder.yml) ([builder_android.yml](https://raw.githubusercontent.com/pingwinator/bs_modulo/master/examples/builder_android.yml) for android) file into your project's repo root folder.
 2. Comment out unnecessary modules from `queue` block.  
 	iOS:
 	
@@ -86,7 +86,7 @@ If you want to inherit new configuration from different configuration than `defa
 For using CocoaPods you have to check your workspace's schemas as shared. To do so you have to open schemes manager and check `Shared` checkboxes opposite necessary schemes. It will create *.xcscheme files in corresponding project files.
 
 ## Jenkins
-[Jenkins job setup](http://gitlab.postindustria.com/backend/mobile-build-system/blob/master/docs/JENKINS.md)
+[Jenkins job setup](JENKINS.md)
 
 ## Migration from old version
-[MIGRATION.md](http://gitlab.postindustria.com/backend/mobile-build-system/blob/master/docs/MIGRATION.md)
+[MIGRATION.md](MIGRATION.md)
