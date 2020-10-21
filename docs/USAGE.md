@@ -47,7 +47,7 @@
 			- javadoc
 			- hockeyapp
 		    
-	> Description for all config params you can find in [CONFIGURATION.md](http://gitlab.postindustria.com/backend/mobile-build-system/blob/master/docs/CONFIGURATION.md) file.
+	> Description for all config params you can find in [CONFIGURATION.md](CONFIGURATION.md) file.
 3. Change default values to your project's ones.
 4. Add config file to commit and push it to remote repo.
 5. Create new job in Jenkins.
